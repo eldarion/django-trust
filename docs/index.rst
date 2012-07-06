@@ -1,13 +1,13 @@
-======
-
-======
+=====
+Trust
+=====
 
 
 
 Development
 -----------
 
-The source repository can be found at https://github.com/
+The source repository can be found at https://github.com/eldarion/django-trust
 
 
 Contents
@@ -21,4 +21,4 @@ Contents
  templatetags
  signals
  usage
- 
+
