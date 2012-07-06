@@ -67,3 +67,22 @@ system. To use it simply::
     # Place OBJ by USER in comments context into the trust system calling the
     #   appropriate TrustApp methods based on trust level.
     apps.moderate(USER, OBJ, context="comments")
+
+
+Contexts
+~~~~~~~~
+
+In Trust, a context is a unique string that is used to seperate out different
+sections or sets of content. They are most useful for when you want different
+levels of required trust for different types of things. For instance it might
+require a trust level of 3 to post a comment, but a trust level of 8 to post blog
+posts.
+
+Contexts are implemented as simple model that contains ``name``, ``trusted_level``,
+and ``moderated_level``. ``name`` is used as the unique string that identifies
+a context. ``trusted_level`` and ``moderated_level`` are the minimum amount of
+trust a user is required to have to be trusted or moderated in this context.
+
+If you pass in an invalid context to any of the methods in trust, it will fail
+silently and use the default trust values. This allows you to scope your contexts
+early without having to define a context or levels for each one.
