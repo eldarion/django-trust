@@ -18,6 +18,23 @@ class TrustItem(models.Model):
     user = models.ForeignKey("auth.User")
     rating = models.IntegerField(null=True, default=None)
 
+    def save(self, *args, **kwargs):
+        super(TrustItem, self).save(*args, **kwargs)
+
+        if self.rating is not None:
+            from trust.registry import apps, ModelNotRegistered
+
+            try:
+                trust_model = apps._registry[self.__class__]()
+            except KeyError:
+                model = self.__class__
+                raise ModelNotRegistered("%s.%s is not registered." % (model._meta.app_label, model._meta.object_name))
+
+            if self.rating >= 0:
+                trust_model.trust(self)
+            else:
+                trust_model.deny(self)
+
 
 class UserTrust(models.Model):
     user = models.OneToOneField("auth.User")
