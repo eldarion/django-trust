@@ -5,8 +5,8 @@ extensions = []
 templates_path = []
 source_suffix = '.rst'
 master_doc = 'index'
-project = u'Trust'
-copyright_holder = ''
+project = u'django-trust'
+copyright_holder = 'Eldarion, Inc'
 copyright = u'2012, %s' % copyright_holder
 exclude_patterns = ['_build']
 pygments_style = 'sphinx'
@@ -22,7 +22,7 @@ man_pages = [
 ]
 
 sys.path.insert(0, os.pardir)
-m = __import__(project)
+m = __import__('trust')
 
 version = m.__version__
 release = version

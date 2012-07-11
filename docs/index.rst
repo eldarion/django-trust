@@ -11,6 +11,8 @@ queue. Trust will then look at a users trust, and the context that this content
 is in and decide if this user should be automatically trusted, moderated until
 a staff member can rate the post, or automatically rejected as being untrustworthy.
 
+This project is brought to you by Midwest Communications.
+
 
 Development
 -----------
