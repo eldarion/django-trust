@@ -130,7 +130,6 @@ setup(
         "Operating System :: OS Independent",
         "Programming Language :: Python",
         "Framework :: Django",
-        "Private :: Do Not Upload",
     ],
     zip_safe=False,
 )
