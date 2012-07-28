@@ -1,4 +1,5 @@
 from django.core.urlresolvers import reverse_lazy
+from django.db.models import Q
 from django.views.generic import ListView, UpdateView
 from django.utils.decorators import method_decorator
 
@@ -9,7 +10,7 @@ from trust.forms import RateForm
 
 
 class TrustQueue(ListView):
-    queryset = TrustItem.objects.filter(rating=None)
+    queryset = TrustItem.objects.filter(Q(rating=None) | Q(queued=True))
 
     @method_decorator(staff_member_required)
     def dispatch(self, *args, **kwargs):

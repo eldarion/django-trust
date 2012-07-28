@@ -17,6 +17,7 @@ class TrustItem(models.Model):
 
     user = models.ForeignKey("auth.User")
     rating = models.IntegerField(null=True, default=None)
+    queued = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):
         super(TrustItem, self).save(*args, **kwargs)
