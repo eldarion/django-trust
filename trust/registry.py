@@ -107,12 +107,15 @@ class TrustAppRegistry(object):
             model = obj.__class__
             raise ModelNotRegistered("%s.%s is not registered." % (model._meta.app_label, model._meta.object_name))
 
-        if trusted:
-            trust_model.trust(obj, user)
-        elif trusted is None:
-            trust_model.moderate(obj, user)
-        else:
-            trust_model.deny(obj, user)
+        try:
+            if trusted:
+                trust_model.trust(obj, user)
+            elif trusted is None:
+                trust_model.moderate(obj, user)
+            else:
+                trust_model.deny(obj, user)
+        except NotImplementedError:
+            pass
 
         TrustItem.objects.create(
                             content_type=ContentType.objects.get_for_model(obj),
@@ -132,6 +135,9 @@ class TrustAppRegistry(object):
         ti.queued = True
         ti.save(process=False)
 
-        trust_model.requeue(obj)
+        try:
+            trust_model.requeue(obj)
+        except NotImplementedError:
+            pass
 
 apps = TrustAppRegistry()
