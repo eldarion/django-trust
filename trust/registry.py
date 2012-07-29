@@ -25,6 +25,9 @@ class TrustApp(object):
     def deny(self, obj, user=None):
         raise NotImplementedError("deny not implemented")
 
+    def requeue(self, obj):
+        raise NotImplementedError("requeue not implemented")
+
 
 class TrustAppRegistry(object):
 
@@ -118,5 +121,17 @@ class TrustAppRegistry(object):
                             rating=None
                         )
 
+    def requeue(self, obj):
+        try:
+            trust_model = self._registry[obj.__class__]()
+        except KeyError:
+            model = obj.__class__
+            raise ModelNotRegistered("%s.%s is not registered." % (model._meta.app_label, model._meta.object_name))
+
+        ti = TrustItem.objects.get(content_type=ContentType.objects.get_for_model(obj), object_id=obj.pk)
+        ti.queued = True
+        ti.save()
+
+        trust_model.requeue(obj)
 
 apps = TrustAppRegistry()

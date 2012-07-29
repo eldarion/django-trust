@@ -1,4 +1,7 @@
+from django.conf import settings
+from django.core.signals import post_save
 from django.db import models
+from django.dispatch import receiver
 
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
@@ -42,3 +45,17 @@ class UserTrust(models.Model):
     verified = models.BooleanField(default=False)
 
     trust = models.IntegerField(blank=True, null=True, default=None, help_text="Allows you to set an exact Trust Level for Someone")
+
+# Check if django-flag is installed and install receivers to requeue an item if it has been flagged
+if "flag" in settings.INSTALLED_APPS:
+    from flag.models import FlaggedContent
+
+    @receiver(post_save, sender=FlaggedContent)
+    def requeue_flagged_content(sender, **kwargs):
+        instance = kwargs.get("instance")
+
+        if instance is not None:
+            from trust.registry import apps, ModelNotRegistered
+
+            obj = instance.content_object
+            apps.queue(obj)
