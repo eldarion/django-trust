@@ -22,10 +22,10 @@ class TrustItem(models.Model):
     rating = models.IntegerField(null=True, default=None)
     queued = models.BooleanField(default=True)
 
-    def save(self, *args, **kwargs):
+    def save(self, process=True, *args, **kwargs):
         super(TrustItem, self).save(*args, **kwargs)
 
-        if self.rating is not None:
+        if self.rating is not None and process:
             from trust.registry import apps, ModelNotRegistered
 
             try:

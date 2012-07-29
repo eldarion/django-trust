@@ -130,7 +130,7 @@ class TrustAppRegistry(object):
 
         ti = TrustItem.objects.get(content_type=ContentType.objects.get_for_model(obj), object_id=obj.pk)
         ti.queued = True
-        ti.save()
+        ti.save(process=False)
 
         trust_model.requeue(obj)
 
