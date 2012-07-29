@@ -115,7 +115,7 @@ class TrustAppRegistry(object):
             trust_model.deny(obj, user)
 
         TrustItem.objects.create(
-                            content_type=ContentType.objects.get_for_model(TrustItem),
+                            content_type=ContentType.objects.get_for_model(obj),
                             object_id=obj.pk,
                             user=user,
                             rating=None
