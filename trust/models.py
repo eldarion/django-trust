@@ -55,7 +55,7 @@ if "flag" in settings.INSTALLED_APPS:
         instance = kwargs.get("instance")
 
         if instance is not None:
-            from trust.registry import apps, ModelNotRegistered
+            from trust.registry import apps
 
             obj = instance.content_object
             apps.queue(obj)
