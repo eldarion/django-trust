@@ -31,4 +31,3 @@ Contents
  templatetags
  signals
  usage
-

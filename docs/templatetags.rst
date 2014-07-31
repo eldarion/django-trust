@@ -7,4 +7,3 @@ Filters
 
 Template Tags
 =============
-
