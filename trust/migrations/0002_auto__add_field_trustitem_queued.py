@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-import datetime
+
 from south.db import db
 from south.v2 import SchemaMigration
-from django.db import models
 
 
 class Migration(SchemaMigration):
@@ -13,11 +12,9 @@ class Migration(SchemaMigration):
                       self.gf('django.db.models.fields.BooleanField')(default=True),
                       keep_default=False)
 
-
     def backwards(self, orm):
         # Deleting field 'TrustItem.queued'
         db.delete_column('trust_trustitem', 'queued')
-
 
     models = {
         'auth.group': {

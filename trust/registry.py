@@ -41,7 +41,7 @@ class TrustAppRegistry(object):
         self._registery[model] = trust_app
 
     def unregister(self, model):
-        if not model in self._registry:
+        if model not in self._registry:
             raise ModelNotRegistered("%s.%s is not registered." % (model._meta.app_label, model._meta.object_name))
 
     def is_trusted(self, user, context=None):
@@ -84,7 +84,7 @@ class TrustAppRegistry(object):
             if trusted_level is not None and ut.trust >= trusted_level:
                 return True
             elif moderated_level is not None and ut.trust >= moderated_level:
-                return  None
+                return None
             else:
                 return False
 
@@ -118,11 +118,11 @@ class TrustAppRegistry(object):
             pass
 
         TrustItem.objects.create(
-                            content_type=ContentType.objects.get_for_model(obj),
-                            object_id=obj.pk,
-                            user=user,
-                            rating=None
-                        )
+            content_type=ContentType.objects.get_for_model(obj),
+            object_id=obj.pk,
+            user=user,
+            rating=None
+        )
 
     def requeue(self, obj):
         try:
